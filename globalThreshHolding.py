@@ -22,7 +22,6 @@ titles = [
 ]
 images = [img, thresh1, thresh2, thresh3, thresh4, thresh5]
 
-# Create visualization
 plt.figure(figsize=(12, 8))
 plt.suptitle(f"Global Thresholding Comparison (Threshold Value: {T1})", color='blue', fontsize=12)
 
@@ -30,7 +29,7 @@ for i in range(6):
     plt.subplot(2, 3, i+1)
     plt.imshow(images[i], 'gray')
     plt.title(titles[i], fontsize=9)
-    plt.axis('off')  # Cleaner than setting ticks to empty lists
+    plt.axis('off')
 
 plt.tight_layout()
 plt.show()
