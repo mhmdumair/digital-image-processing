@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-img = cv2.imread("image/cameraman.tif",0)
+img = cv2.imread("../image/cameraman.tif", 0)
 img1 = img.copy()
 
 # img1[(img1 < 100) | (img1 > 180)] = 25

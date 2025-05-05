@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-img = cv2.imread("image/meter1.jpg", 0)
+img = cv2.imread("../image/meter1.jpg", 0)
 if img is None:
     print("Error: Image not found.")
     exit()
@@ -20,8 +20,7 @@ log_img_array = np.array(log_img, dtype=np.uint8)
 # With scaling
 scaling_const = 255 / np.log(np.max(img) + 1)
 img_with_scaling = scaling_const * np.log(img + 1)
-img_with_scaling = np.clip(img_with_scaling, 0, 255)
-log_img_array_scaling = np.round(img_with_scaling).astype(np.uint8)
+img_with_scaling = np.array(img_with_scaling, dtype=np.uint8)
 
 # Plotting
 plt.subplot(221)
@@ -33,7 +32,7 @@ plt.imshow(log_img_array, cmap="gray")
 plt.title("Log Transformation")
 
 plt.subplot(223)
-plt.imshow(log_img_array_scaling, cmap="gray")
+plt.imshow(img_with_scaling, cmap="gray")
 plt.title("With Scaling Constant")
 
 plt.tight_layout()

@@ -1,7 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 
-img = cv2.imread("image/Aerial.tif",0)
+img = cv2.imread("../image/Aerial.tif", 0)
 img1 = cv2.equalizeHist(img)
 
 plt.subplot(221)

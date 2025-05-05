@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-img = cv2.imread("image/meter1.jpg",0)
+img = cv2.imread("../image/meter1.jpg", 0)
 img1 = cv2.bitwise_not(img)
 img2 = 255-img
 img3 = img.copy()

@@ -19,7 +19,7 @@ import cv2
 # plt.show()
 
 
-img = cv2.imread("image/3.jpg",1)
+img = cv2.imread("../image/3.jpg", 1)
 b,g,r = cv2.split(img)
 
 b_ = b.copy()

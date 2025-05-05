@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-img = cv2.imread("image/contrast_str.png",0)
+img = cv2.imread("../image/contrast_str.png", 0)
 
 input_max = np.max(img)
 input_min = np.min(img)

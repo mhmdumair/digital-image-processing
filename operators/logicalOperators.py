@@ -2,18 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 
-img1 = cv2.imread("image/messi.jpg",1)
-img2 = cv2.imread("image/mask_single.jpg",1)
+img1 = cv2.imread("../image/3.jpg", 1)
+img2 = cv2.imread("../image/mask_single.jpg", 1)
 
 img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
 img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-img2 = cv2.resize(img2,(620,420))
+img2 = cv2.resize(img2,(1600,1200))
 
-# output = cv2.add(img1,img2)
-# output = cv2.addWeighted(img1,0.2,img2,0.8,0)
-# output = cv2.subtract(img1,img2)
-# output = cv2.multiply(img1,img2)
-output =  cv2.divide(img1,img2)
+# output =  cv2.bitwise_and(img1,img2)
+# output = cv2.bitwise_or(img1,img2)
+# output = cv2.bitwise_not(img1)
+output = cv2.bitwise_xor(img1,img2)
 
 plt.figure(figsize=(10, 5))
 

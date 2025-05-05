@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
-img1 = cv.imread("image/messi.jpg",0)
-img2 = cv.imread("image/OpenCV_Logo.jpg",1)
+img1 = cv.imread("../image/messi.jpg", 0)
+img2 = cv.imread("../image/OpenCV_Logo.jpg", 1)
 # cv.imshow("Image",img1)
 
 # Horizontal Stack

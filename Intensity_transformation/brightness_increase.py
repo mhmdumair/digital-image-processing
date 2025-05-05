@@ -56,7 +56,7 @@ def increase_brightness_color_2(img,value):
     img1 = cv2.cvtColor(img1, cv2.COLOR_HSV2BGR)
     return img1
 
-img = cv2.imread("image/messi5.jpg",1)
+img = cv2.imread("../image/messi5.jpg", 1)
 img1 = increase_brightness_color_1(img,80)
 img2 = increase_brightness_color_2(img,80)
 

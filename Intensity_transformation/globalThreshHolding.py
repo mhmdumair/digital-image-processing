@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv2.imread("image/cameraman.tif", cv2.IMREAD_GRAYSCALE)
+img = cv2.imread("../image/cameraman.tif", cv2.IMREAD_GRAYSCALE)
 
 T1 = 100
 
