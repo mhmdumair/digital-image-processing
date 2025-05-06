@@ -5,20 +5,20 @@ import matplotlib.pyplot as plt
 img = cv2.imread("../image/test_pattern_blurring_orig.tif",1)
 img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
 
-avarage1 = cv2.blur(img,(5,5))
-avarage12 = cv2.boxFilter(img,-1,(5,5,))
+avarage = cv2.blur(img,(5,5))
+gauss = cv2.GaussianBlur(img,(5,5),0)
 
 plt.subplot(131)
 plt.imshow(img)
 plt.title("Original")
 
 plt.subplot(132)
-plt.imshow(avarage1)
+plt.imshow(avarage)
 plt.title("5 * 5")
 
 plt.subplot(133)
-plt.imshow(avarage12)
-plt.title("5*5 box filter")
+plt.imshow(gauss)
+plt.title("Gaussian Burr")
 
 plt.tight_layout()
 plt.show()
