@@ -1,55 +1,65 @@
+# import cv2
+# import matplotlib.pyplot as plt
+# img = cv2.imread("noisy_xray_image.jpg",0)
+# gauss = cv2.GaussianBlur(img, (5,5), 0)
+# median = cv2.medianBlur(img, 5)
+# bil = cv2.bilateralFilter(img, 5, 75, 75)
+# plt.subplot(221)
+# plt.title("Original")
+# plt.imshow(img, cmap="gray")
+# plt.axis("off")
+# plt.subplot(222)
+# plt.title("Gaussian Blur")
+# plt.imshow(gauss, cmap="gray")
+# plt.axis("off")
+# plt.subplot(223)
+# plt.title("Median Blur")
+# plt.imshow(median, cmap="gray")
+# plt.axis("off")
+# plt.subplot(224)
+# plt.title("Bilateral Filter")
+# plt.imshow(bil, cmap="gray")
+# plt.axis("off")
+# plt.show()
+
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
-img = cv2.imread('xray.jpg', 0)
-
-f = np.fft.fft2(img)
-fshift = np.fft.fftshift(f)
-magnitude_spectrum = np.log1p(np.abs(fshift))
-
+img = cv2.imread('noisy_xray_image.jpg', 0)
+f_transform = np.fft.fft2(img)
+f_shift = np.fft.fftshift(f_transform)
+magnitude_spectrum = 20 * np.log(np.abs(f_shift)+1)
 rows, cols = img.shape
-mask = np.ones((rows, cols), np.uint8)
-
-num_lines = 12
-spacing = cols // (num_lines + 1)
-line_width = 5
-for i in range(1, num_lines + 1):
-    mask[:, i * spacing - line_width//2 : i * spacing + line_width//2] = 0
-
-fshift_filtered = fshift * mask
-filtered_magnitude_spectrum = np.log1p(np.abs(fshift_filtered))
-
-f_ishift = np.fft.ifftshift(fshift_filtered)
+crow, ccol = rows // 2, cols // 2
+mask = np.ones((rows, cols), np.float32)
+band_width = img.shape[0]
+for i in range(1,9):
+ mask[0:band_width, ccol+(i*30)-5:ccol+(i*30)+5] = 0
+ mask[0:band_width, ccol-(i*30)-5:ccol-(i*30)+5] = 0
+f_shift_filtered = f_shift * mask
+magnitude_spectrum_filtered = 20 * np.log(np.abs(f_shift_filtered)+1)
+f_ishift = np.fft.ifftshift(f_shift_filtered)
 img_denoised = np.abs(np.fft.ifft2(f_ishift))
-
-# Plot the results
-plt.figure(figsize=(12, 8))
-
-plt.subplot(2, 3, 1)
+plt.figure(figsize=(15, 10))
+plt.subplot(231)
 plt.imshow(img, cmap='gray')
 plt.title('Original Noisy X-ray')
 plt.axis('off')
-
-plt.subplot(2, 3, 2)
+plt.subplot(232)
 plt.imshow(magnitude_spectrum, cmap='gray')
 plt.title('Original Magnitude Spectrum')
 plt.axis('off')
-
-plt.subplot(2, 3, 3)
-plt.imshow(mask * 255, cmap='gray')
+plt.subplot(233)
+plt.imshow(mask, cmap='gray')
 plt.title('Denoising Mask')
 plt.axis('off')
-
-plt.subplot(2, 3, 4)
-plt.imshow(filtered_magnitude_spectrum, cmap='gray')
+plt.subplot(234)
+plt.imshow(magnitude_spectrum_filtered, cmap='gray')
 plt.title('Filtered Magnitude Spectrum')
 plt.axis('off')
-
-plt.subplot(2, 3, 5)
+plt.subplot(235)
 plt.imshow(img_denoised, cmap='gray')
 plt.title('Denoised X-ray Image')
 plt.axis('off')
-
-plt.tight_layout()
 plt.show()
+
