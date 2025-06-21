@@ -3,37 +3,35 @@ import matplotlib.pyplot as plt
 import cv2
 
 img = cv2.imread("../image/meter1.jpg", 0)
-if img is None:
-    print("Error: Image not found.")
-    exit()
 
-print("Image shape:", img.shape)
-print("Image dtype:", img.dtype)
-print("Min pixel value:", np.min(img))
-print("Max pixel value:", np.max(img))
+img_float = img.astype(np.float64)
 
+c = 255.0 / np.log(1 + np.max(img_float))
+log_img_scaled = c * np.log1p(img_float)  # log1p is more accurate for log(1+x)
+log_image2 = np.clip(log_img_scaled, 0, 255).astype(np.uint8)  # Clip values before conversion
 
-# Log transformation without scaling
-log_img = np.log(img + 1)
-log_img_array = np.array(log_img, dtype=np.uint8)
+log_img = np.log1p(img_float)  # Use log1p for numerical stability
+log_image1 = np.clip(log_img, 0, 255).astype(np.uint8)
 
-# With scaling
-scaling_const = 255 / np.log(np.max(img) + 1)
-img_with_scaling = scaling_const * np.log(img + 1)
-img_with_scaling = np.array(img_with_scaling, dtype=np.uint8)
+print(log_image1[100:200, 100:200])
+print(log_image2[100:200,100:200])
 
-# Plotting
-plt.subplot(221)
-plt.imshow(img, cmap="gray")
+# Display results
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 3, 1)
+plt.imshow(img, cmap='gray')
 plt.title("Original")
+plt.axis("off")
 
-plt.subplot(222)
-plt.imshow(log_img_array, cmap="gray")
-plt.title("Log Transformation")
+plt.subplot(1, 3, 2)
+plt.imshow(log_image1, cmap='gray')
+plt.title("Normalized Log")
+plt.axis("off")
 
-plt.subplot(223)
-plt.imshow(img_with_scaling, cmap="gray")
-plt.title("With Scaling Constant")
+plt.subplot(1, 3, 3)
+plt.imshow(log_image2, cmap='gray')
+plt.title("Scaled Log")
+plt.axis("off")
 
 plt.tight_layout()
 plt.show()
