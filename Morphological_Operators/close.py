@@ -11,12 +11,12 @@ kernel_2 = cv2.getStructuringElement(cv2.MORPH_RECT,   (5, 5))
 kernel_3 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5, 5))
 kernel_4 = cv2.getStructuringElement(cv2.MORPH_CROSS,  (5, 5))
 
-open1 = cv2.morphologyEx(img,cv2.MORPH_OPEN, kernel_1)
-open2 = cv2.morphologyEx(img,cv2.MORPH_OPEN, kernel_2)
-open3 = cv2.morphologyEx(img,cv2.MORPH_OPEN, kernel_3)
-open4 = cv2.morphologyEx(img,cv2.MORPH_OPEN, kernel_4)
+close1 = cv2.morphologyEx(img,cv2.MORPH_CLOSE, kernel_1)
+close2 = cv2.morphologyEx(img,cv2.MORPH_CLOSE, kernel_2)
+close3 = cv2.morphologyEx(img,cv2.MORPH_CLOSE, kernel_3)
+close4 = cv2.morphologyEx(img,cv2.MORPH_CLOSE, kernel_4)
 
-images = [img, open1, open2, open3, open4]
+images = [img, close1, close2, close3, close4]
 titles  = ['Original',
            'Ones kernel',
            'Rectangular',
