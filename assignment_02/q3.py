@@ -1,35 +1,42 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-img = cv2.imread('cell_segmentation.jpg', 0)
-_, thresh = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY +
-cv2.THRESH_OTSU)
-kernel = np.ones((3,3), np.uint8)
-opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=2)
-sure_bg = cv2.dilate(opening, kernel, iterations=3)
-dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
-ret, sure_fg = cv2.threshold(dist_transform, 0.5*dist_transform.max(),
-255, 0)
-sure_fg = np.uint8(sure_fg)
-unknown = cv2.subtract(sure_bg, sure_fg)
-ret, markers = cv2.connectedComponents(sure_fg)
-markers = markers + 1
-markers[unknown == 255] = 0
-img_color = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-markers = cv2.watershed(img_color, markers)
-img_color[markers == -1] = [255,255,255]
-cell_count = len(np.unique(markers)) - 2
-print("Number of cells detected:", cell_count)
-plt.subplot(131)
-plt.imshow(img, cmap='gray')
-plt.title('Original')
-plt.axis('off')
-plt.subplot(132)
-plt.imshow(markers)
-plt.title('Watershed Markers')
-plt.axis('off')
-plt.subplot(133)
-plt.imshow(img_color)
-plt.title('Segmented Cells')
-plt.axis('off')
+
+img = cv2.imread("cell_segmentation.jpg")
+
+img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+rs,thresh = cv2.threshold(img_gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+
+kernal = np.ones((3,3),np.uint8)
+opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernal,iterations=1)
+sureBg = cv2.dilate(opening,kernal,iterations=1)
+
+distTransform = cv2.distanceTransform(opening,cv2.DIST_L2,5)
+ret, sureFg = cv2.threshold(distTransform,0.5*distTransform.max(),255,0)
+sureFg = np.uint8(sureFg)
+
+unknown = np.subtract(sureBg ,sureFg)
+
+_,markers = cv2.connectedComponents(sureFg)
+markers+=1
+
+markers[unknown==255] = 0
+markers = cv2.watershed(img,markers)
+
+segmented = img.copy()
+segmented[markers==-1] = (0,0,255)
+
+cellLabel = np.unique(markers)
+cellLabel = cellLabel[cellLabel>1]
+print(len(cellLabel))
+
+
+plt.figure(figsize=(8,6))
+plt.subplot(2,3,1), plt.imshow(img, cmap='gray'), plt.title('Original')
+plt.subplot(2,3,2), plt.imshow(sureBg, cmap='gray'), plt.title("Sure background")
+plt.subplot(2,3,3), plt.imshow(sureFg, cmap='gray'), plt.title('Sure fore ground')
+plt.subplot(2,3,4), plt.imshow(unknown, cmap='gray'), plt.title('Unknown')
+plt.subplot(2,3,5), plt.imshow(segmented, cmap='gray'), plt.title('Segmented')
+
 plt.show()
