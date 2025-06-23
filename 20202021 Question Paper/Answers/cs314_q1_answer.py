@@ -11,7 +11,7 @@ LARGE_CIRCLE_AREA = 3600
 SMALL_CIRCLE_AREA = 1300
 
 
-img = cv2.imread('images/Q1_Circles.jpg',0)
+img = cv2.imread('../Q1_Circles.tif',0)
 blur = cv2.medianBlur(img,9)
 
 T1 = 100
@@ -44,10 +44,10 @@ whole_img_small_only = cv2.morphologyEx(small_large_removed, cv2.MORPH_OPEN, ker
 
 
 #large counting
-image, contours_L, hierarchy = cv2.findContours(whole_img_large_only,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contours_L, hierarchy = cv2.findContours(whole_img_large_only,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
 #small counting
-image, contours_S, hierarchy = cv2.findContours(whole_img_small_only,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+contours_S, hierarchy = cv2.findContours(whole_img_small_only,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
 #large counting
 large_contours = []
