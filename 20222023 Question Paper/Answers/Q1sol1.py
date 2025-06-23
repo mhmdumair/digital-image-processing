@@ -52,7 +52,7 @@ def selective_blur_inside_contour(image, min_perimeter):
 
     return result
 
-image = cv2.imread(r'images\galaxy.jpg')
+image = cv2.imread("../galaxy.jpg")
 
 # Define minimum perimeter for contours
 min_perimeter = 100  # Adjust as needed

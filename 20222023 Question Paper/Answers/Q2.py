@@ -115,7 +115,7 @@ def visualize_results(image, filtered_image, mask):
     plt.show()
 
 # Load the image
-image = cv2.imread(r'images\planet_surface.png', cv2.IMREAD_GRAYSCALE)
+image = cv2.imread("../planet_surface.png", cv2.IMREAD_GRAYSCALE)
 
 # Apply the line mask
   # Angle of the line in degrees
