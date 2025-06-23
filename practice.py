@@ -41,3 +41,5 @@ cmap='gray'), plt.title("Denoised Image")
 plt.tight_layout()
 
 plt.show()
+
+

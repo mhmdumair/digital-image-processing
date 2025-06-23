@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 COLOR = 'maroon'
 FONT_SIZE = 8
 
-img_1 = cv2.imread('images/messi_1.jpg')
-img_2 = cv2.imread('images/messi_2.jpg')
+img_1 = cv2.imread('../messi_1.jpg')
+img_2 = cv2.imread('../messi_1.jpg')
 
 img_1_ = cv2.cvtColor(img_1,cv2.COLOR_BGR2RGB)
 img_2_ = cv2.cvtColor(img_2,cv2.COLOR_BGR2RGB)

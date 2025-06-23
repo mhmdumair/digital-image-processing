@@ -7,10 +7,10 @@ img = cv2.imread("../image/meter1.jpg", 0)
 img_float = img.astype(np.float64)
 
 c = 255.0 / np.log(1 + np.max(img_float))
-log_img_scaled = c * np.log1p(img_float)  # log1p is more accurate for log(1+x)
+log_img_scaled = c * np.log(img_float+1)  # log1p is more accurate for log(1+x)
 log_image2 = np.clip(log_img_scaled, 0, 255).astype(np.uint8)  # Clip values before conversion
 
-log_img = np.log1p(img_float)  # Use log1p for numerical stability
+log_img = np.log(img_float+1)  # Use log1p for numerical stability
 log_image1 = np.clip(log_img, 0, 255).astype(np.uint8)
 
 print(log_image1[100:200, 100:200])
